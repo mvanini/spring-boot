@@ -25,6 +25,10 @@ publishing.publications.withType(MavenPublication) {
 				delegate."project.build.sourceEncoding"('UTF-8')
 				delegate."project.reporting.outputEncoding"('UTF-8')
 				delegate."spring-boot.run.main-class"('${start-class}')
+				delegate."spring-boot.cyclonedx.projectType"('application')
+				delegate."spring-boot.cyclonedx.outputDirectory"('${project.build.outputDirectory}/META-INF/sbom')
+				delegate."spring-boot.cyclonedx.outputFormat"('json')
+				delegate."spring-boot.cyclonedx.outputName"('application.cdx')
 			}
 		}
 		root.scm.plus {
@@ -163,10 +167,10 @@ publishing.publications.withType(MavenPublication) {
 										delegate.goal('makeAggregateBom')
 									}
 									configuration {
-										delegate.projectType('application')
-										delegate.outputDirectory('${project.build.outputDirectory}/META-INF/sbom')
-										delegate.outputFormat('json')
-										delegate.outputName('application.cdx')
+										delegate.projectType('${spring-boot.cyclonedx.projectType}')
+										delegate.outputDirectory('${spring-boot.cyclonedx.outputDirectory}')
+										delegate.outputFormat('${spring-boot.cyclonedx.outputFormat}')
+										delegate.outputName('${spring-boot.cyclonedx.outputName}')
 									}
 								}
 							}
